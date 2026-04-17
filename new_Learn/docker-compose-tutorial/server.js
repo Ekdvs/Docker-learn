@@ -1,3 +1,5 @@
+require("dotenv").config(); // 👈 ADD THIS
+
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
@@ -9,15 +11,13 @@ app.use(cors());
 app.use(express.json());
 
 mongoose
-  .connect(process.env.MONGO_URI || "mongodb://localhost:27017/userDB")
+  .connect(process.env.MONGO_URI)
   .then(() => {
-    console.log("Connected to MongoDB");
+    console.log("Connected to MongoDB Atlas ✅");
   })
   .catch((err) => {
     console.error("Error connecting to MongoDB", err);
   });
-
-
 app.get("/api/users", async (req, res) => {
   try {
     const users = await User.find();
